@@ -4,7 +4,7 @@
 containers = {"traefik", "whoami"}
 
 for container in containers:
-    docker stop container
-    docker rm container
+    docker stop @(container)
+    docker rm @(container)
 
 docker compose up -d
