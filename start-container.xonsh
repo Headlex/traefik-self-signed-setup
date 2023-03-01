@@ -1,0 +1,10 @@
+#!/usr/bin/env xonsh
+
+
+containers = {"traefik", "whoami"}
+
+for container in containers:
+    docker stop container
+    docker rm container
+
+docker compose up -d
