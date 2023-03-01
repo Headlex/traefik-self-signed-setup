@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  reverse-proxy:
+    # latest official traefik image
+    image: "traefik:latest"
+    # declarative name
+    container_name: "traefik"
+    ports:
+      # http port
+      - "80:80"
+      # https port
+      - "8080:8080"
+    volumes:
+      # enable docker sock to listen to all docker events
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      # map static config file to copntainer to configure traefik instance
+      - "./config/static-configuration.yml:/etc/traefik/traefik.yml:ro"
+      # map dynamic config file to container to configure traefik instance on the go
+      - "./config/dynamic-configuration.yml:/etc/traefik/dynamic.yml:ro"
+
+  whoami:
+    # simple webservice 
+    image: "traefik/whoami:latest"
+    # declarative name
+    container_name: "whoami"
+    labels:
+      # expose container via traefik
+      - "traefik.enable=true"
+      # url to route to service
+      - "traefik.http.routers.whoami.rule=Host(`whoami.local`)"
+      # define entrypoint to service
+      - "traefik.http.routers.whoami.entrypoints=http"
+
