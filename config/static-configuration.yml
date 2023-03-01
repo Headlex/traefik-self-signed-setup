@@ -1,0 +1,17 @@
+entrypoints:
+  # define entrypoint for http requests
+  http:
+    address: ":80"
+
+providers:
+  # configure docker provider
+  docker:
+    # watch for changes
+    watch: true
+    # don´t expose containers unless configured
+    exposedByDefault: false
+
+api:
+  # enable dashboard on port 8080
+  insecure: true
+  dashboard: true
